@@ -24,6 +24,8 @@ query{
   user{
     firstName
     lastName
+    login
+    gender:attrs(path:"gender")
     auditRatio
     totalUp
     totalDown

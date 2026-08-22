@@ -1,6 +1,7 @@
 import { handleLogout } from "../auth/logout.js";
 import { graphqlRequest } from "../graphql/client.js";
-import { RESULT_QUERY, USER_QUERY } from "../graphql/queries.js";
+import { QUERY, USER_QUERY } from "../graphql/queries.js";
+import { populateData } from "../user_data.js";
 
 export function renderProfile() {
     return `
@@ -25,9 +26,10 @@ export function renderProfile() {
 
 export async function loadProfile() {
     try {
-        const data = await graphqlRequest(RESULT_QUERY);
+        const data = await graphqlRequest(QUERY);
 
         console.log("GraphQL data:", data);
+        populateData(data.user[0]);
 
     } catch (error) {
         console.error("Failed to load profile:", error);

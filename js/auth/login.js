@@ -1,4 +1,4 @@
-import { bindProfileEvents, loadProfile, renderProfile } from "../profile/profile.js";
+import { loadProfile, renderProfile } from "../profile/profile.js";
 import { saveToken } from "./token.js";
 import { showToast } from "../ui.js";
 

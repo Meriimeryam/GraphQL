@@ -30,5 +30,8 @@ export async function graphqlRequest(query,variables={}) {
         throw new Error(result.errors[0].message);
     }
 
+    console.log("result: ",result.data);
+    
+
     return result.data;
 }
