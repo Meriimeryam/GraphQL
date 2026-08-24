@@ -1,6 +1,6 @@
-import { loadProfile, renderProfile } from "../profile/profile.js";
+import { bindProfileEvents, loadProfile, renderProfile } from "../profile/profile.js";
 import { saveToken } from "./token.js";
-import { showToast } from "../ui.js";
+import { showToast,render } from "../ui.js";
 
 export function renderLogin() {
     return `
@@ -63,11 +63,13 @@ export async function handleLogin(event) {
         
 
         saveToken(jwt);
+        render(renderProfile,bindProfileEvents);
         await loadProfile();
-        render(renderProfile, bindProfileEvents);
         
 
     } catch (err) {
+        console.error(err);
+        
         showToast(err,"error")
     }
 

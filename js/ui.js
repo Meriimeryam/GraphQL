@@ -14,6 +14,8 @@ export function showToast(message, type) {
 
 export function render(renderView,bindEvents) {
     app.innerHTML = renderView();
-
-    bindEvents();
+    
+    if (bindEvents) {
+        bindEvents();
+    }
 }

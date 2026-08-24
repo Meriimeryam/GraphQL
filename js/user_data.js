@@ -15,7 +15,11 @@ export function populateData(user) {
                 name: p.object.name,
                 createdAt: p.createdAt,
                 xp: p.amount,
-            })),
+            })).sort(
+                (a, b) =>
+                    new Date(a.createdAt) -
+                    new Date(b.createdAt)
+            ),
         },
 
         audits: {
@@ -28,7 +32,9 @@ export function populateData(user) {
         skills: user.skills.map(s => ({
             label: s.type.replace("skill_", ""),
             level:s.amount,
-        })),
+        })).sort(
+                (a, b) => b.level - a.level
+            ),
     };
 
 }
