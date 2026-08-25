@@ -20,21 +20,17 @@ export function drawRatioChart(audits) {
     const receivedLength = receivedPercentage * circumference;
 
     //recieved circle
-    const receivedCircle = document.createElementNS(SVG_NS, "circle");
+    const background = document.createElementNS(SVG_NS, "circle");
 
-    receivedCircle.setAttribute("cx", cx);
-    receivedCircle.setAttribute("cy", cy);
-    receivedCircle.setAttribute("r", radius);
+    background.setAttribute("cx", cx);
+    background.setAttribute("cy", cy);
+    background.setAttribute("r", radius);
 
-    receivedCircle.setAttribute("fill", "none");
-    receivedCircle.setAttribute("stroke-width", 40);
-    receivedCircle.setAttribute("stroke", "#a39c9c");
-    receivedCircle.setAttribute(
-        "transform",
-        `rotate(-90 ${cx} ${cy})`
-    );
+    background.setAttribute("fill", "none");
+    background.setAttribute("stroke-width", 40);
+    background.setAttribute("stroke", "#a39c9c");
 
-    receivedCircle.setAttribute("stroke-dasharray", `${receivedLength} ${circumference}`);
+    // background.setAttribute("stroke-dasharray", `${receivedLength} ${circumference}`);
 
 
     //Circle
@@ -52,7 +48,7 @@ export function drawRatioChart(audits) {
         `rotate(-90 ${cx} ${cy})`
     );
 
-    svg.appendChild(receivedCircle);
+    svg.appendChild(background);
     svg.appendChild(circle);
 
     //Ratio

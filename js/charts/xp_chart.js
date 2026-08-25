@@ -43,13 +43,15 @@ export function drawXpChart(xpPerProject) {
         return {
             x,
             y,
-            project
+            project,
+            time
         };
     })
 
     
 
-    //Axis
+    //=========================== AXIS =====================
+    //Y Axis
     const yAxis = document.createElementNS(SVG_NS, "line");
 
     yAxis.setAttribute("x1", margin.left);
@@ -60,6 +62,7 @@ export function drawXpChart(xpPerProject) {
 
     svg.appendChild(yAxis);
     
+    //X Axis
     const xAxis = document.createElementNS(SVG_NS, "line");
 
     xAxis.setAttribute("x1", margin.left);
@@ -70,7 +73,7 @@ export function drawXpChart(xpPerProject) {
 
     svg.appendChild(xAxis);
 
-    //Axis values
+    //Axis values (ticks)
     const maxY = Math.ceil(maxXP / 25000) * 25000;
     const yTicks = 6;
     const yStep = maxY / yTicks;

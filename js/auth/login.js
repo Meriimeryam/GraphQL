@@ -7,15 +7,17 @@ export function renderLogin() {
         <div id="login-view">
             <h1>Login</h1>
             <form id="login-form">
-                <label for="identifier">Email or username:</label>
-                <input type="text" id="identifier" name="identifier" placeholder="jsmith" required>
-                <br>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="intra password" required>
-                <br>
+                <div class="form-field">
+                    <label for="identifier">Email or username:</label>
+                    <input type="text" id="identifier" name="identifier" placeholder="jsmith" required>
+                </div>
+                <div class="form-field">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="intra password" required>
+                </div>
+                <div id="login-errors" hidden></div>  
                 <button type="submit">Login</button>
             </form>
-            <div id="login-errors" hidden></div>
         </div>
     `
 }
@@ -51,8 +53,8 @@ export async function handleLogin(event) {
         });
         
         if (!response.ok) {
-            if (response.status=== 403) {
-                showError("user Does not exist or passeword incorrect", errContainor);
+            if (response.status=== 403 || response.status=== 401) {
+                showError("invalid credentials", errContainor);
                 return;
             }
             
@@ -75,5 +77,12 @@ export async function handleLogin(event) {
 
 
 
+}
+
+function showError(message,containor) {
+    console.log("========= showError ==========");
+    
+    containor.removeAttribute("hidden");
+    containor.textContent = message;
 }
 

@@ -64,6 +64,7 @@ query{
         type:{_ilike:"skill_%"}, 
         eventId:{_eq:41}
       } 
+      order_by:[{type:asc},{amount:desc}]
     ){
       amount
       createdAt
