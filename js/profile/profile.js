@@ -20,15 +20,16 @@ export function renderProfile() {
             <div id="user-info"></div>
             <div id="graphs">
                 <div id="graph-1">
-                    <svg width="600" height="600" xmlns="http://www.w3.org/2000/svg">
+                    <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
                     </svg>
+                    <div id="graph-tooltip" hidden></div>
                 </div>
                 <div id="graph-2">
-                    <svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+                    <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
                     </svg>
                 </div>
                 <div id="graph-3">
-                    <svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+                    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
                     </svg>
                 </div>
             </div>
@@ -57,4 +58,20 @@ export async function loadProfile() {
     } catch (error) {
         console.error("Failed to load profile:", error);
     }
+}
+
+function renderProfileInfo(profile) {
+    const container = document.getElementById("user-info");
+    const gender = profile.gender;
+    let image;
+
+    if (profile.avatar===null) {
+        if (gender==="Female") {
+            image="../static/resources/nezuko.jpeg"
+        } else {
+            image="../static/resources/tomyoka.jpeg"
+        }
+    }
+
+
 }

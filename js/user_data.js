@@ -1,9 +1,11 @@
 
 export function populateData(user) {
+    
     return {
         profile: {
             firstName : user.firstName,
-            lastName : user.lastName,
+            lastName: user.lastName,
+            avatar:user.img,
             login : user.login,
             gender : user.gender,
             level : user.level,
@@ -15,6 +17,7 @@ export function populateData(user) {
                 name: p.object.name,
                 createdAt: p.createdAt,
                 xp: p.amount,
+                mandatory:p.object.parents[0].mandatory,
             })).sort(
                 (a, b) =>
                     new Date(a.createdAt) -

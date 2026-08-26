@@ -166,7 +166,7 @@ nav{
     align-items: center;
     justify-content: space-between;
 
-    padding: 1rem 0;
+    padding: 2rem 0;
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -179,5 +179,102 @@ nav{
 #title p{
     margin-top: 0.35rem;
     font-size: 0.9rem;
+    color: var(--secondary-text-color);
+}
+
+#logout{
+    padding: 0.6rem 1.2rem;
+
+    background-color: transparent;
+    color: var(--secondary-text-color);
+
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+
+    font: inherit;
+    cursor: pointer;
+
+    transition: background-color 150ms ease, 
+                color 150ms ease,
+                border-color 150ms ease;
+}
+
+#logout:hover{
+    color: var(--main-text-color);
+    background-color: rgba(224, 32, 32, 0.08);
+    border-color: var(--primary-red);
+}
+
+#user-info{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    margin-top: 2rem;
+    padding: 1.5rem;
+
+    background-color: var(--surface-color);
+    border-radius: 10px;
+}
+
+#graphs{
+    display: grid;
+    grid-template-columns: repeat(2,  1fr);
+    gap: 1rem;
+
+    margin-top: 2rem;
+}
+
+
+#graph-1{
+    grid-column: 1 / -1;
+    position: relative;
+}
+
+#graph-1, #graph-2, #graph-3{
+    padding: 1.5rem;
+    
+    background-color: var(--surface-color);
+    border-radius: 10px;
+}
+
+#graphs svg{
+    display: block;
+    width: 90%;
+    height: auto;
+    margin: 0 auto;
+}
+/* Tooltip */
+
+#graph-tooltip{
+    position: absolute;
+
+    padding: 0.75em 1rem;
+    background-color: var(--elevated-surface-color);
+    color: var(--main-text-color);
+
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+
+    font-size: 0.9rem;
+
+    pointer-events: none;
+    white-space: nowrap;
+
+    z-index: 10;
+
+}
+
+#graph-tooltip strong{
+    display: block;
+    margin-bottom: 0.25rem;
+
+    color: var(--bright-red);
+}
+
+#graph-tooltip span{
+    display: block;
     color: var(--secondary-text-color);
 }

@@ -84,6 +84,9 @@ query{
       createdAt
       object{
         name
+        parents{
+          mandatory:attrs(path:"mandatory")
+        }
       }
     }
     

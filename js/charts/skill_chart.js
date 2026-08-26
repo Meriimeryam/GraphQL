@@ -1,3 +1,5 @@
+import { COLORS } from "../ui.js";
+
 const width = 600;
 
 const margin = {
@@ -15,7 +17,7 @@ const gap = 10;
 const SVG_NS = "http://www.w3.org/2000/svg";
 
 export function drawSkillChart(skills) {
-    const svg = document.querySelector("#graph-1 > svg");
+    const svg = document.querySelector("#graph-2 > svg");
 
     if (!svg) {
         return;
@@ -31,7 +33,8 @@ export function drawSkillChart(skills) {
         background.setAttribute("width", chartWidth);
         background.setAttribute("rx", 10);
         background.setAttribute("ry", 10);
-        background.setAttribute("fill", "gray");
+        background.setAttribute("fill", COLORS.border);
+        background.setAttribute("opacity", "0.5");
 
         svg.appendChild(background);
 
@@ -46,7 +49,14 @@ export function drawSkillChart(skills) {
         bar.setAttribute("width", barWidth);
         bar.setAttribute("rx", 10);
         bar.setAttribute("ry", 10);
-        bar.setAttribute("fill", "pink");
+        bar.setAttribute("fill", COLORS.primaryRed);
+        
+        bar.addEventListener("mouseenter", () => {
+            bar.setAttribute("fill", COLORS.brightRed);
+        });
+        bar.addEventListener("mouseleave", () => {
+            bar.setAttribute("fill", COLORS.primaryRed);
+        });
     
         svg.appendChild(bar);
 
@@ -57,6 +67,8 @@ export function drawSkillChart(skills) {
         label.setAttribute("y", y + barHeight / 2);
         label.setAttribute("text-anchor", "end");
         label.setAttribute("dominant-baseline", "middle");
+        label.setAttribute("fill", COLORS.text);
+
         label.textContent = skill.label;
         svg.appendChild(label);
 
@@ -68,6 +80,7 @@ export function drawSkillChart(skills) {
         percentage.setAttribute("y", y + barHeight / 2);
         percentage.setAttribute("text-anchor", "start");
         percentage.setAttribute("dominant-baseline", "middle");
+        percentage.setAttribute("fill", COLORS.secondaryText);
         percentage.textContent = `${skill.level}%`;
         svg.appendChild(percentage);
         

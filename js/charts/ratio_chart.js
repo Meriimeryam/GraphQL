@@ -1,3 +1,5 @@
+import { COLORS } from "../ui.js";
+
 const SVG_NS = "http://www.w3.org/2000/svg";
 
 export function drawRatioChart(audits) {
@@ -28,7 +30,7 @@ export function drawRatioChart(audits) {
 
     background.setAttribute("fill", "none");
     background.setAttribute("stroke-width", 40);
-    background.setAttribute("stroke", "#a39c9c");
+    background.setAttribute("stroke", COLORS.darkRed);
 
     // background.setAttribute("stroke-dasharray", `${receivedLength} ${circumference}`);
 
@@ -41,7 +43,7 @@ export function drawRatioChart(audits) {
     circle.setAttribute("r", radius);
     circle.setAttribute("fill", "none");
     circle.setAttribute("stroke-width", 40);
-    circle.setAttribute("stroke", "pink");
+    circle.setAttribute("stroke", COLORS.primaryRed);
     circle.setAttribute("stroke-dasharray", `${doneLength} ${circumference}`);
     circle.setAttribute(
         "transform",
@@ -58,6 +60,9 @@ export function drawRatioChart(audits) {
     ratioText.setAttribute("y", cy);
     ratioText.setAttribute("text-anchor", "middle");
     ratioText.setAttribute("dominant-baseline", "middle");
+    ratioText.setAttribute("fill", COLORS.text);
+    ratioText.setAttribute("font-size", "20");
+
 
     ratioText.textContent = audits.ratio.toFixed(2);
 
