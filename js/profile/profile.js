@@ -60,7 +60,7 @@ export async function loadProfile() {
     }
 }
 
-function renderProfileInfo(profile) {
+function renderProfileInfo(profile,xpTotal) {
     const container = document.getElementById("user-info");
     const gender = profile.gender;
     let image;
@@ -68,10 +68,41 @@ function renderProfileInfo(profile) {
     if (profile.avatar===null) {
         if (gender==="Female") {
             image="../static/resources/nezuko.jpeg"
-        } else {
+        } else if (gender==="Male"){
             image="../static/resources/tomyoka.jpeg"
+        } else {
+            image = "../static/resources/luffy.jpeg"
         }
+    } else {
+        image = profile.avatar;
     }
 
+    const firstName = profile.firstName ?? "Guest";
+    const lastName = profile.lastName ?? "";
+    const level = profile.level ?? "You do not have a rank yet";
+    const xp = xpTotal ?? "0";
 
+    container.innerHTML = `
+        
+    `
+    
+    
+}
+
+function rationComment(ratio,gender) {
+    switch (true) {
+        case ratio<=0.5:
+            return "You are in danger!";
+        case ratio > 0.5 && ratio < 1:
+            return "You need to work harder";
+        case ratio >= 1 && ratio < 2:
+            return "Leveling Up ⚡";
+        case ratio >= 2 && ratio < 3:
+            if (gender === "Female") return "You go girl 🖤";
+            if (gender === "Male") return "You are the boss 🔥";
+            return "Perfect ratio!";
+
+        default:
+            return "Legendary Status! 👑";
+    }
 }
