@@ -25,6 +25,8 @@ query{
     firstName
     lastName
     login
+    img:avatarUrl
+    email
     gender:attrs(path:"gender")
     auditRatio
     totalUp

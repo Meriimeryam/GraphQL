@@ -3,7 +3,7 @@ import { graphqlRequest } from "../graphql/client.js";
 import {drawSkillChart} from "../charts/skill_chart.js"
 import { QUERY, USER_QUERY } from "../graphql/queries.js";
 import { populateData } from "../user_data.js";
-import { drawXpChart } from "../charts/xp_chart.js";
+import { drawXpChart, xpConvert} from "../charts/xp_chart.js";
 import { drawRatioChart } from "../charts/ratio_chart.js";
 
 export function renderProfile() {
@@ -20,17 +20,21 @@ export function renderProfile() {
             <div id="user-info"></div>
             <div id="graphs">
                 <div id="graph-1">
+                    <h2 class="graph-title">XP by Project</h2>
                     <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
                     </svg>
                     <div id="graph-tooltip" hidden></div>
                 </div>
                 <div id="graph-2">
+                    <h2 class="graph-title">Skills</h2>
                     <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
                     </svg>
                 </div>
                 <div id="graph-3">
+                    <h2 class="graph-title">Audit Ratio</h2>
                     <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
                     </svg>
+                    <p id="ratio-comment"></p>
                 </div>
             </div>
         </main>
@@ -53,6 +57,7 @@ export async function loadProfile() {
         drawSkillChart(userData.skills);
         drawXpChart(userData.xp.xpPerProject);
         drawRatioChart(userData.audits);
+        renderProfileInfo(userData.profile,userData.xp.total)
         
 
     } catch (error) {
@@ -62,12 +67,12 @@ export async function loadProfile() {
 
 function renderProfileInfo(profile,xpTotal) {
     const container = document.getElementById("user-info");
-    const gender = profile.gender;
+    const gender = profile.gender?? "";
     let image;
 
-    if (profile.avatar===null) {
+    if (profile.avatar==="") {
         if (gender==="Female") {
-            image="../static/resources/nezuko.jpeg"
+            image="./static/resources/nezuko.jpeg"
         } else if (gender==="Male"){
             image="../static/resources/tomyoka.jpeg"
         } else {
@@ -76,28 +81,64 @@ function renderProfileInfo(profile,xpTotal) {
     } else {
         image = profile.avatar;
     }
+    console.log(profile.avatar);
+    
 
-    const firstName = profile.firstName ?? "Guest";
-    const lastName = profile.lastName ?? "";
-    const level = profile.level ?? "You do not have a rank yet";
-    const xp = xpTotal ?? "0";
+    const firstName = profile.firstName;
+    const lastName = profile.lastName;
+    const level = profile.level;
+    const xp = xpTotal;
 
     container.innerHTML = `
-        
+        <div class="user-profile">
+            <div class="user-avatar">
+                <img src="${image}" alt="${firstName} Avatar">
+            </div>
+            <div class="user-identifier">
+                <h1 class="user-name">
+                    <span class="first-name">${firstName}</span>
+                    <span class="last-name">${lastName} </span>
+                </h1>
+                <p class="user-login">@${profile.login}</p>
+            </div>
+        </div>
+        <div class="user-stats">
+            <div class="user-stat">
+                <span class="stat-label">Level</span>
+                <span class="stat-value user-level">${level}</span>
+            </div>
+
+            <div class="user-stat">
+                <span class="stat-label">Total XP</span>
+                <span class="stat-value user-xp">${xpConvert(xp)}</span>
+            </div>
+        </div>
+        <div class="user-details">
+
+            <div class="user-detail">
+                <span class="detail-value user-gender">${gender}</span>
+            </div>
+            
+            <div class="user-detail">
+                <span class="detail-value user-email">${profile.email}</span>
+            </div>
+
+
+        </div>
     `
     
     
 }
 
-function rationComment(ratio,gender) {
+export function ratioComment(ratio,gender) {
     switch (true) {
         case ratio<=0.5:
             return "You are in danger!";
-        case ratio > 0.5 && ratio < 1:
+        case ratio < 1:
             return "You need to work harder";
-        case ratio >= 1 && ratio < 2:
+        case ratio < 2:
             return "Leveling Up ⚡";
-        case ratio >= 2 && ratio < 3:
+        case ratio < 3:
             if (gender === "Female") return "You go girl 🖤";
             if (gender === "Male") return "You are the boss 🔥";
             return "Perfect ratio!";

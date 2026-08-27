@@ -7,7 +7,7 @@ const margin = {
     top: 30,
     right: 30,
     bottom: 110,
-    left: 60
+    left: 80
 };
 
 
@@ -17,6 +17,13 @@ const graphHeight = height - margin.top - margin.bottom;
 const SVG_NS = "http://www.w3.org/2000/svg";
 
 export function drawXpChart(xpPerProject) {
+    if (xpPerProject.length === 0) {
+        const container = document.querySelector("#graph-1");
+        container.innerHTML = `
+            <p id="no-projects">No Projects Yet</p>
+        `;
+        return;
+    }
 
     const svg = document.querySelector("#graph-1 > svg");
     if (!svg) return;
@@ -185,23 +192,23 @@ export function drawXpChart(xpPerProject) {
 
         svg.appendChild(circle);
 
-        if (point.project.mandatory) {
-            const projectName = document.createElementNS(SVG_NS, "text");
+        // if (point.project.mandatory) {
+        //     const projectName = document.createElementNS(SVG_NS, "text");
 
-            const nameY = margin.top + graphHeight + 15;
+        //     const nameY = margin.top + graphHeight + 15;
 
-            projectName.setAttribute("x", point.x);
-            projectName.setAttribute("y", nameY);
+        //     projectName.setAttribute("x", point.x);
+        //     projectName.setAttribute("y", nameY);
 
-            projectName.setAttribute("transform", `rotate(-45 ${point.x} ${nameY})`)
+        //     projectName.setAttribute("transform", `rotate(-45 ${point.x} ${nameY})`)
             
-            projectName.setAttribute("text-anchor", "end" );
-            projectName.setAttribute("fill", COLORS.secondaryText);
-            projectName.setAttribute("font-size", "12");
-            projectName.textContent = point.project.name;
+        //     projectName.setAttribute("text-anchor", "end" );
+        //     projectName.setAttribute("fill", COLORS.secondaryText);
+        //     projectName.setAttribute("font-size", "12");
+        //     projectName.textContent = point.project.name;
 
-            svg.appendChild(projectName);
-        }
+        //     svg.appendChild(projectName);
+        // }
 
         
 
@@ -210,13 +217,13 @@ export function drawXpChart(xpPerProject) {
     
 }
 
-function xpConvert(xp) {
+export function xpConvert(xp) {
     if (xp<1000) {
         return xp;
     } else if (xp >= 1000 && xp < 1000000) {
-        return (xp/1000).toFixed(0)+"K"
+        return (xp/1000).toFixed(2)+"KB"
     } else if (xp >= 1000000) {
-        return (xp/1000000).toFixed(0)+"M"
+        return (xp/1000000).toFixed(2)+"MB"
     }
 }
 

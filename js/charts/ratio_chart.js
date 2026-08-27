@@ -1,8 +1,10 @@
+import { ratioComment } from "../profile/profile.js";
 import { COLORS } from "../ui.js";
+import {xpConvert} from "./xp_chart.js"
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 
-export function drawRatioChart(audits) {
+export function drawRatioChart(audits,gender) {
     const total = audits.done + audits.received;
 
     const donePercentage = (audits.done / total);
@@ -68,7 +70,27 @@ export function drawRatioChart(audits) {
 
     svg.appendChild(ratioText);
 
+    const comment = document.getElementById("ratio-comment");
+    comment.textContent = ratioComment(audits.ratio, gender);
 
+    const container = document.getElementById("graph-3");
+    const auditValues = document.createElement("div");
+    auditValues.className = "audit-values";
+
+    auditValues.innerHTML = `
+            <div class="audit-value audit-up">
+                <span class="audit-label">Done</span>
+                <span class="audit-number">
+                    <span id="up-arrow">↑</span>${xpConvert(audits.done)}
+                </span>
+            </div>
+
+            <div class="audit-value audit-down">
+                <span class="audit-label">Received</span>
+                <span class="audit-number"><span id="down-arrow">↓</span>${xpConvert(audits.received)}</span>
+            </div>
+    `
+    container.appendChild(auditValues);
 
 
 }

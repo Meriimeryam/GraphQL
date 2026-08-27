@@ -19,6 +19,100 @@ export function renderLogin() {
                 <button type="submit">Login</button>
             </form>
         </div>
+        <svg
+    class="login-illustration"
+    viewBox="0 0 500 280"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    >
+        <defs>
+            <linearGradient id="red-glow" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#E02020" stop-opacity="0.9"/>
+                <stop offset="100%" stop-color="#E02020" stop-opacity="0"/>
+            </linearGradient>
+
+            <filter id="soft-glow">
+                <feGaussianBlur stdDeviation="4"/>
+            </filter>
+        </defs>
+
+        <!-- Background glow -->
+        <circle
+            cx="250"
+            cy="140"
+            r="100"
+            fill="#E02020"
+            opacity="0.08"
+            filter="url(#soft-glow)"
+        />
+
+        <!-- Connections -->
+        <g
+            class="graph-lines"
+            fill="none"
+            stroke="#41413D"
+            stroke-width="1.5"
+        >
+            <path d="M100 80 L210 130"/>
+            <path d="M210 130 L300 70"/>
+            <path d="M210 130 L290 210"/>
+            <path d="M300 70 L410 110"/>
+            <path d="M290 210 L400 190"/>
+            <path d="M100 80 L120 200"/>
+            <path d="M120 200 L290 210"/>
+        </g>
+
+        <!-- Red highlighted connections -->
+        <g
+            class="graph-lines-red"
+            fill="none"
+            stroke="#E02020"
+            stroke-width="2"
+            stroke-linecap="round"
+        >
+            <path d="M210 130 L300 70"/>
+            <path d="M210 130 L290 210"/>
+        </g>
+
+        <!-- Nodes -->
+        <g>
+            <circle cx="100" cy="80" r="5" fill="#B8B8B2"/>
+            <circle cx="120" cy="200" r="5" fill="#B8B8B2"/>
+
+            <circle cx="210" cy="130" r="9" fill="#E02020"/>
+
+            <circle cx="300" cy="70" r="6" fill="#E02020"/>
+            <circle cx="290" cy="210" r="6" fill="#E02020"/>
+
+            <circle cx="410" cy="110" r="5" fill="#B8B8B2"/>
+            <circle cx="400" cy="190" r="5" fill="#B8B8B2"/>
+        </g>
+
+        <!-- Central ring -->
+        <circle
+            cx="210"
+            cy="130"
+            r="18"
+            fill="none"
+            stroke="#E02020"
+            stroke-width="1"
+            opacity="0.5"
+        />
+
+        <!-- Decorative corner lines -->
+        <g
+            fill="none"
+            stroke="#41413D"
+            stroke-width="1"
+            opacity="0.7"
+        >
+            <path d="M40 40 H90"/>
+            <path d="M40 40 V70"/>
+
+            <path d="M460 240 H410"/>
+            <path d="M460 240 V210"/>
+        </g>
+    </svg>
     `
 }
 

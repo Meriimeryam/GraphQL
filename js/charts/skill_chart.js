@@ -17,6 +17,14 @@ const gap = 10;
 const SVG_NS = "http://www.w3.org/2000/svg";
 
 export function drawSkillChart(skills) {
+    if (skills.length === 0) {
+        const container = document.querySelector("#graph-2");
+        container.innerHTML = `
+            <p id="no-skills">No Skills Yet</p>
+        `;
+        return;
+    }
+
     const svg = document.querySelector("#graph-2 > svg");
 
     if (!svg) {
