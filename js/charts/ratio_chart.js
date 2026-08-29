@@ -1,6 +1,6 @@
 import { ratioComment } from "../profile/profile.js";
 import { COLORS } from "../ui.js";
-import {xpConvert} from "./xp_chart.js"
+import { xpConvert} from "../helpers.js"
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 
@@ -8,10 +8,7 @@ export function drawRatioChart(audits,gender) {
     const total = audits.done + audits.received;
 
     const donePercentage = (audits.done / total);
-    const receivedPercentage = (audits.received / total);
 
-    
-    
     const svg = document.querySelector("#graph-3 > svg");
     
     const radius = 100;
@@ -21,7 +18,6 @@ export function drawRatioChart(audits,gender) {
     const circumference = 2 * Math.PI * radius;
 
     const doneLength = donePercentage * circumference;
-    const receivedLength = receivedPercentage * circumference;
 
     //recieved circle
     const background = document.createElementNS(SVG_NS, "circle");
@@ -34,7 +30,6 @@ export function drawRatioChart(audits,gender) {
     background.setAttribute("stroke-width", 40);
     background.setAttribute("stroke", COLORS.darkRed);
 
-    // background.setAttribute("stroke-dasharray", `${receivedLength} ${circumference}`);
 
 
     //Circle

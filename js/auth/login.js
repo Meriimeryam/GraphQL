@@ -1,9 +1,10 @@
 import { bindProfileEvents, loadProfile, renderProfile } from "../profile/profile.js";
 import { saveToken } from "./token.js";
-import { showToast,render } from "../ui.js";
+import { showToast,render,showError } from "../ui.js";
 
 export function renderLogin() {
     return `
+
         <div id="login-view">
             <h1>Login</h1>
             <form id="login-form">
@@ -128,14 +129,18 @@ export function bindLoginEvents() {
 
 export async function handleLogin(event) {
     event.preventDefault();
-    console.log("event =========> ",event);
+    // console.log("event =========> ",event);
 
     const errContainor = document.getElementById("login-errors");
 
     const identifier = document.getElementById("identifier").value.trim();
     const password = document.getElementById("password").value;
 
-    const encodedCredentials = btoa(`${identifier}:${password}`);
+    const credentials = `${identifier}:${password}`;
+
+    const bytes = new TextEncoder().encode(credentials);
+
+    const encodedCredentials = btoa(String.fromCharCode(...bytes));
     
     
     try {
@@ -155,12 +160,13 @@ export async function handleLogin(event) {
             showToast("Server error", "error");
             return;
         }
+
         const jwt = await response.json();
         
 
         saveToken(jwt);
         render(renderProfile,bindProfileEvents);
-        await loadProfile();
+        await loadProfile(true);
         
 
     } catch (err) {
@@ -173,10 +179,5 @@ export async function handleLogin(event) {
 
 }
 
-function showError(message,containor) {
-    console.log("========= showError ==========");
-    
-    containor.removeAttribute("hidden");
-    containor.textContent = message;
-}
+
 

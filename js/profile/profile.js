@@ -1,10 +1,12 @@
 import { handleLogout } from "../auth/logout.js";
 import { graphqlRequest } from "../graphql/client.js";
-import {drawSkillChart} from "../charts/skill_chart.js"
-import { QUERY, USER_QUERY } from "../graphql/queries.js";
+import { drawSkillChart} from "../charts/skill_chart.js"
+import { QUERY } from "../graphql/queries.js";
 import { populateData } from "../user_data.js";
-import { drawXpChart, xpConvert} from "../charts/xp_chart.js";
+import { xpConvert} from "../helpers.js";
+import { drawXpChart} from "../charts/xp_chart.js";
 import { drawRatioChart } from "../charts/ratio_chart.js";
+import { showToast } from "../ui.js";
 
 export function renderProfile() {
     return `
@@ -27,7 +29,7 @@ export function renderProfile() {
                 </div>
                 <div id="graph-2">
                     <h2 class="graph-title">Skills</h2>
-                    <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                    <svg viewBox="0 0 600 900" xmlns="http://www.w3.org/2000/svg">
                     </svg>
                 </div>
                 <div id="graph-3">
@@ -47,21 +49,23 @@ export function bindProfileEvents() {
 }
 
 
-export async function loadProfile() {
+export async function loadProfile(sayHi) {
     try {
         const data = await graphqlRequest(QUERY);
 
-        console.log("GraphQL data:", data);
         const userData = populateData(data.user[0]);
-        console.log(userData);
+
         drawSkillChart(userData.skills);
         drawXpChart(userData.xp.xpPerProject);
         drawRatioChart(userData.audits);
-        renderProfileInfo(userData.profile,userData.xp.total)
+        renderProfileInfo(userData.profile, userData.xp.total);
+        if (sayHi) {
+            showToast(`Welcome back ${userData.profile.firstName}`,"success");
+        }
         
 
     } catch (error) {
-        console.error("Failed to load profile:", error);
+        showToast("Failed to load profile","error")
     }
 }
 
@@ -81,7 +85,6 @@ function renderProfileInfo(profile,xpTotal) {
     } else {
         image = profile.avatar;
     }
-    console.log(profile.avatar);
     
 
     const firstName = profile.firstName;
@@ -132,6 +135,8 @@ function renderProfileInfo(profile,xpTotal) {
 
 export function ratioComment(ratio,gender) {
     switch (true) {
+        case ratio === 0:
+            return "";
         case ratio<=0.5:
             return "You are in danger!";
         case ratio < 1:

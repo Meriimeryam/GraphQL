@@ -1,4 +1,5 @@
 import { COLORS } from "../ui.js";
+import { xpConvert, formatDate } from "../helpers.js";
 
 const width = 600;
 const height = 400;
@@ -17,6 +18,7 @@ const graphHeight = height - margin.top - margin.bottom;
 const SVG_NS = "http://www.w3.org/2000/svg";
 
 export function drawXpChart(xpPerProject) {
+
     if (xpPerProject.length === 0) {
         const container = document.querySelector("#graph-1");
         container.innerHTML = `
@@ -179,9 +181,6 @@ export function drawXpChart(xpPerProject) {
             positionTooltip(circle, tooltip);
         });
 
-        // circle.addEventListener("mousemove", (e) => {
-        //     positionTooltip(e, tooltip);
-        // });
 
         circle.addEventListener("mouseleave", () => {
             circle.setAttribute("r", "4");
@@ -192,50 +191,12 @@ export function drawXpChart(xpPerProject) {
 
         svg.appendChild(circle);
 
-        // if (point.project.mandatory) {
-        //     const projectName = document.createElementNS(SVG_NS, "text");
-
-        //     const nameY = margin.top + graphHeight + 15;
-
-        //     projectName.setAttribute("x", point.x);
-        //     projectName.setAttribute("y", nameY);
-
-        //     projectName.setAttribute("transform", `rotate(-45 ${point.x} ${nameY})`)
-            
-        //     projectName.setAttribute("text-anchor", "end" );
-        //     projectName.setAttribute("fill", COLORS.secondaryText);
-        //     projectName.setAttribute("font-size", "12");
-        //     projectName.textContent = point.project.name;
-
-        //     svg.appendChild(projectName);
-        // }
-
-        
-
     });
 
     
 }
 
-export function xpConvert(xp) {
-    if (xp<1000) {
-        return xp;
-    } else if (xp >= 1000 && xp < 1000000) {
-        return (xp/1000).toFixed(2)+"KB"
-    } else if (xp >= 1000000) {
-        return (xp/1000000).toFixed(2)+"MB"
-    }
-}
 
-function formatDate(date) {
-    return date.toLocaleString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-    })
-}
 
 function positionTooltip(circle,tooltip) {
     const graph = document.querySelector("#graph-1");

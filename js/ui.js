@@ -1,4 +1,5 @@
 const app = document.getElementById("app");
+const toastContainer = document.getElementById("toast-container");
 
 export const COLORS = {
     primaryRed: "#E02020",
@@ -14,12 +15,16 @@ export const COLORS = {
 export function showToast(message, type) {
     const toast = document.createElement('div');
     toast.classList.add("toast");
-    toast.classList.add(type);
+    if (type) {
+        toast.classList.add(type);
+    }
+    toast.setAttribute("role", "status");
     toast.innerText = message;
 
-    app.appendChild(toast);
+    toastContainer.appendChild(toast);
     setTimeout(() => {
-        toast.remove();
+        toast.classList.add("toast-hide");
+        toast.addEventListener("animationend", () => toast.remove(), { once: true });
     }, 2000);
 }
 
@@ -29,4 +34,10 @@ export function render(renderView,bindEvents) {
     if (bindEvents) {
         bindEvents();
     }
+}
+
+export function showError(message,containor) {
+    
+    containor.removeAttribute("hidden");
+    containor.textContent = message;
 }

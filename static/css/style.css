@@ -578,6 +578,79 @@ nav{
     }
 }
 
+/* Toast */
+#toast-container {
+    position: fixed;
+    top: 1.25rem;
+    right: 1.25rem;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    width: min(360px, calc(100vw - 2rem));
+    pointer-events: none;
+}
+
+.toast {
+    width: 100%;
+    padding: 0.85rem 1rem;
+
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+
+    background-color: var(--elevated-surface-color);
+    color: var(--main-text-color);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+
+    animation: toast-slide-in 180ms ease-out;
+}
+
+.toast.error {
+    border-color: rgba(240, 48, 48, 0.65);
+    background-color: rgba(143, 21, 21, 0.25);
+    color: var(--bright-red);
+}
+.toast.success{
+    border-color: rgba(13, 182, 50, 0.65);
+    background-color: rgba(22, 121, 43, 0.25);
+    color: rgba(5, 189, 51, 0.65);
+}
+
+.toast-hide {
+    animation: toast-slide-out 150ms ease-in forwards;
+}
+
+@keyframes toast-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(-0.5rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes toast-slide-out {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-0.5rem);
+    }
+}
+
+
+
 @media (768px <= width <= 1023px) {
     #graphs{
         grid-template-columns: 1fr;
@@ -590,6 +663,9 @@ nav{
     }
     #graphs svg{
         width: 100%;
+    }
+    .login-illustration {
+        display: none;
     }
 }
 
@@ -628,7 +704,7 @@ nav{
     }
 
     .user-stats {
-        flex-direction: column; /* Stack stats vertically on small phones */
+        flex-direction: column; 
         gap: 0.75rem;
     }
     .user-stat + .user-stat {
@@ -659,7 +735,6 @@ nav{
 }
 
 @media (hover: none) {
-    /* On touch devices, keep avatar visible without requiring hover flip */
     .user-avatar img {
         transform: rotateY(0deg);
         filter: grayscale(0%);

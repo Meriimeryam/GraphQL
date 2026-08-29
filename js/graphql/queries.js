@@ -1,23 +1,3 @@
-export const USER_QUERY = `
-    {
-        user{
-            id
-            login
-        }
-    }
-`;
-
-export const RESULT_QUERY = `
-    {
-        result {
-            id
-            user {
-                id
-                login
-            }
-        }
-    }
-`
 
 export const QUERY =`
 query{
